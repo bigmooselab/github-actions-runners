@@ -1,0 +1,11 @@
+version: "3.7"
+
+services:
+  runner:
+    build: .
+    environment:
+      #RUNNER_REPOSITORY_URL: ${RUNNER_REPOSITORY_URL}
+      RUNNER_ORGANIZATION_URL: "https://github.com/ALJAZEERAPLUS"
+      ACCESS_TOKEN: ${ACCESS_TOKEN}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
