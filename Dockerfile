@@ -3,14 +3,11 @@ FROM ${FROM}
 LABEL maintainer="scottjbowen@icloud.com"
 
 # Set versions
-ARG DEBIAN_FRONTEND=noninteractive
 ARG GIT_VERSION="2.29.2"
 ARG RUNNER_VERSION="2.276.1"
 ARG DOCKER_COMPOSE_VERSION="1.27.4"
 
-ENV RUNNER_NAME=""
-ENV RUNNER_TOKEN=""
-ENV RUNNER_REPOSITORY_URL=""
+# ENV REPOSITORY_URL=""
 ENV ACCESS_TOKEN=$ACCESS_TOKEN
 ENV RUNNER_WORK_DIRECTORY="work"
 ENV RUNNER_LABELS="node12"
@@ -64,27 +61,9 @@ RUN curl -L -o /usr/local/bin/docker-compose \
   "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" && \
   chmod +x /usr/local/bin/docker-compose
 
-# Install Git for repo checkout
-RUN cd /tmp && \
-  curl -sL -o git.tgz \
-  https://www.kernel.org/pub/software/scm/git/git-${GIT_VERSION}.tar.gz && \
-  tar zxf git.tgz  && \
-  cd git-${GIT_VERSION}  && \
-  ./configure --prefix=/usr  && \
-  make && \
-  make install && \
-  rm -rf /tmp/*
-
 # Install Node.js 12.x as required by Fantasia and GraphQL
 RUN curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash - \
   && sudo apt-get install -y nodejs
-
-# Install PHP dependencies
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
-  apt-get install -y \
-  php-cli \
-  php-mbstring \
-  php-xml
 
 # Install Sonar Scanner
 RUN wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.5.0.2216-linux.zip \
