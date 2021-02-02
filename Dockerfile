@@ -3,7 +3,6 @@ FROM ${FROM}
 LABEL maintainer="scottjbowen@icloud.com"
 
 # Set versions
-ARG GIT_VERSION="2.29.2"
 ARG RUNNER_VERSION="2.276.1"
 ARG DOCKER_COMPOSE_VERSION="1.27.4"
 
